@@ -1,0 +1,79 @@
+
+### ICD, CPT, and HCPCS Code Coverage by Provider
+
+#### Medicare:
+- ICD Codes:
+  - I10 (Hypertension)
+  - E11 (Type 2 Diabetes)
+  - Z23 (Immunizations)
+  - J18.9 (Pneumonia)
+  - F32.9 (Major depressive disorder, unspecified)
+
+- CPT/HCPCS Codes:
+  - 99213 (Office visit, Established patient)
+  - 71010 (Chest X-ray)
+  - 99204 (Office visit, New patient, moderate complexity)
+  - 90460 (Immunization administration)
+  - 90716 (Influenza vaccine)
+  - G0008 (Administer influenza vaccine)
+  - A0428 (Ambulance service, basic life support)
+  - E0118 (Walker, adjustable height)
+  - E1399 (Durable medical equipment, not otherwise classified)
+
+#### Medicaid:
+- ICD Codes:
+  - J45909 (Asthma)
+  - Z23 (Immunizations)
+  - J18.9 (Pneumonia)
+  - F32.9 (Major depressive disorder)
+  -Z2009(Immunization)
+
+- CPT/HCPCS Codes:
+  - 99406 (Smoking cessation counseling)
+  - 99214 (Office visit, Established patient, more complex)
+  - 99204 (Office visit, New patient, moderate complexity)
+  - 71010 (Chest X-ray)
+  - 99211 (Office visit, Established patient, minimal complexity)
+  - G0009 (Administer pneumococcal vaccine)
+  - A0429 (Ambulance service, advanced life support)
+  - E0100 (Cane, adjustable height)
+
+#### Codes Needing More Information:
+- CPT/HCPCS Codes:
+  - 90989 (Home Hemodialysis System)
+  - 90460 (Immunization Administration)
+  - J0170 (Injection of adalimumab)
+
+---
+
+### Business Rules for Claim Processing
+
+#### 1. **Code Validation Rule**:
+- **Action**: Validate the claim’s ICD, CPT, or HCPCS codes.
+- **Criteria**: The claim must include valid ICD, CPT, or HCPCS codes that are covered by the patient's insurance provider.
+  - If the codes are **not valid** or are listed under **‘Need More Information’**, **Queue** the claim for review.
+
+#### 2. **Accept Claim Rule**:
+- **Action**: Accept the claim if *all* of the following conditions are met:
+  1. The claim includes **valid ICD**, **CPT**, or **HCPCS** codes covered by the patient’s provider.
+  2. **Patient Details** must be complete:
+     - Full name, address, date of birth, patient’s account number or and SSN (or Federal Tax ID).
+     - If the patient’s relationship to the insured is ‘self’, insured details are **not** required.
+     - If the relationship to the insured is **not** ‘self’, insured details (name, ID number or policy group, or program name) are **required**.
+  3. **Service Details** must be provided:
+     - Referring provider’s name or NPI, date(s) of service, charges, and total charge.
+
+#### 3. **Reject Claim Rule**:
+- **Action**: Reject the claim if **any** of the following conditions apply:
+  1. The **ICD**, **CPT**, or **HCPCS** codes listed in the claim are invalid.
+  2. The claim is **not health related** (e.g., accident claims, car insurance, or any other non-medical claims).
+
+#### 4. **Queue Claim Rule**:
+- **Action**: Queue the claim for **manual review** if **any** of the following conditions apply:
+  1. The **ICD**, **CPT**, or **HCPCS** codes listed in the claim are in the **‘Need More Information’** category.
+  2. The claim lacks **supporting information** or needs **additional documentation** to make a decision.
+  3. There is any **ambiguity** or conflicting information in the claim details.
+  4. The claim is from an **out-of-network provider** or requires further validation from a different provider.
+  5. The **ICD**, **CPT**, or **HCPCS** code listed is **not covered** by Medicare or Medicaid but is covered by another provider.
+
+If none of the above rules are met, Queue the claim for further review.

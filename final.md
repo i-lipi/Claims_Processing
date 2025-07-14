@@ -1,0 +1,1 @@
+Queue the claim for manual review due to insufficient supporting information and lack of specified ICD, CPT, or HCPCS codes. Confidence score: 85. The score indicates that further details are necessary for proper validation of the claim, as essential codes are missing, preventing compliance with the Code Validation Rule.

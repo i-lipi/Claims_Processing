@@ -1,0 +1,32 @@
+# Ignore Python cache and environment
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore Jupyter notebooks outputs
+.ipynb_checkpoints/
+
+# Ignore environment files
+.env
+*.env
+
+# Ignore OS junk
+.DS_Store
+Thumbs.db
+
+# Ignore logs and database
+*.log
+*.sqlite3
+
+# Ignore personal files
+*.json
+*.pdf
+
+# Ignore VS Code settings
+.vscode/
+
+# Ignore test scripts with secrets
+tests/claimprocess.py
+tests/claimsvision.py
+tests/togethertest.py

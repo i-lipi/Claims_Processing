@@ -1,0 +1,40 @@
+reviewtask:
+  description: >
+    Review the {extracted_text} and extract key details such as the document type(Your job is to categorize the claim type, service information, patient details, and other pertinent information.
+    Categorize the claim type (vision, dental, compensation, health insurance, mental health, address changes and others), and extract the most important details to assist in making an informed decision.
+    The task will summarize the claim's content and provide context for decision-making.
+  expected_output: >
+    A structured summary of the claim, including the type of document, type of claim, and other key information like patient details, service date, etc after reviewing the following data {extracted_text}
+  agent: reviewagent
+  user_input: '{"extracted_text": "{extracted_text}"}'
+
+
+claimtask:
+  description: >
+    Use the knowledge_sources to make a decision of accept, reject or queuing the claim based on the extracted information.
+    You have no prior knowledge related to decision-making.
+    Use ONLY the knowledge_sources to make the decision. Do not exaggerate or use any external knowledge.  
+    Provide the reference from the knowledge_sources that influenced your decision.
+    Assign a confidence score  based on your decision. Explain your reasoning behind the score and assignment of that specific value.
+    Return the decision (Accepted, Rejected, or Queued) with reasoning in 2-3 sentences based on the knowledge_sources, along with the confidence score.
+    Keep the reasoning concise and clear.
+  expected_output: >
+      A single paragraph containing the final decision (Accept, Reject, or Queue), followed by the confidence score on a scale from 1 to 100, and the reasoning in 2-3 concise sentences based on the information from knowledge_sources. 
+      This should be returned as a single block of text without any line breaks in a paragraph.
+  agent: claimagent
+  context: [reviewtask]
+  user_input: '{"extracted_text": "{extracted_text}"}'
+  knowledge_sources: [text_source]
+
+
+
+finaltask:
+  description: >
+    Review the decision made by the claim decision agent and the corresponding confidence score.
+    If the confidence score is **90 or higher**, maintain the decision as final.
+    If the confidence score is **less than 90** and the decision is **Accepted** or **Queued**, override and queue the claim for further review.
+  expected_output: >
+    A single paragraph containing the final decision (Accept, Reject, or Queue), followed by the confidence score and the reasoning in 2-3 concise sentences.
+  agent: finalagent
+  context: [claimtask]
+  
