@@ -1,54 +1,25 @@
-# Visionproj Crew
+This project implements an AI-driven claims processing system using the CrewAI multi-agent framework, integrated with LangChain's Textract module and Vision LLMs to analyze healthcare and insurance-related documents.
 
-Welcome to the Visionproj Crew project, powered by [crewAI](https://crewai.com). This template is designed to help you set up a multi-agent AI system with ease, leveraging the powerful and flexible framework provided by crewAI. Our goal is to enable your agents to collaborate effectively on complex tasks, maximizing their collective intelligence and capabilities.
+The pipeline processes PDFs, images, and scanned receipts to extract structured data, classify the claim type, and make rule-based decisions—enhancing automation, accuracy, and scalability in real-world document workflows reducing the manual time and effort by 85%.
 
-## Installation
 
-Ensure you have Python >=3.10 <3.13 installed on your system. This project uses [UV](https://docs.astral.sh/uv/) for dependency management and package handling, offering a seamless setup and execution experience.
+📄 Document Ingestion & OCR
+- Supports uploads from local paths or S3.
+- OCR is performed using:
+    * LangChain-integrated AWS Textract – for robust key-value, table, and form extraction.
+    * Vision LLMs (e.g., Together.ai/OpenAI) – for reading receipts, images, and unstructured or handwritten text.
 
-First, if you haven't already, install uv:
+🧠 CrewAI Agent Workflow
+- Defined via agents.yaml and tasks.yaml.
 
-```bash
-pip install uv
-```
+Workflow:
 
-Next, navigate to your project directory and install the dependencies:
+Review Agent: Parses and classifies the document type (e.g., dental, vision, compensation, mental health), and extracts relevant fields like patient info, service date, etc.
 
-(Optional) Lock the dependencies and install them by using the CLI command:
-```bash
-crewai install
-```
-### Customizing
+Claim Decision Agent: Applies deterministic business rules from a configured knowledge_sources file to classify the claim as Accepted, Rejected, or Queued, along with a confidence score (1–100).
 
-**Add your `OPENAI_API_KEY` into the `.env` file**
+Final Decision Validator: Verifies the decision. If confidence < 90, overrides to Queued for manual review.
 
-- Modify `src/visionproj/config/agents.yaml` to define your agents
-- Modify `src/visionproj/config/tasks.yaml` to define your tasks
-- Modify `src/visionproj/crew.py` to add your own logic, tools and specific args
-- Modify `src/visionproj/main.py` to add custom inputs for your agents and tasks
+🗃️ Data Persistence
 
-## Running the Project
-
-To kickstart your crew of AI agents and begin task execution, run this from the root folder of your project:
-
-```bash
-$ crewai run
-```
-
-This command initializes the visionproj Crew, assembling the agents and assigning them tasks as defined in your configuration.
-
-This example, unmodified, will run the create a `report.md` file with the output of a research on LLMs in the root folder.
-
-## Understanding Your Crew
-
-The visionproj Crew is composed of multiple AI agents, each with unique roles, goals, and tools. These agents collaborate on a series of tasks, defined in `config/tasks.yaml`, leveraging their collective skills to achieve complex objectives. The `config/agents.yaml` file outlines the capabilities and configurations of each agent in your crew.
-
-## Support
-
-For support, questions, or feedback regarding the Visionproj Crew or crewAI.
-- Visit our [documentation](https://docs.crewai.com)
-- Reach out to us through our [GitHub repository](https://github.com/joaomdmoura/crewai)
-- [Join our Discord](https://discord.com/invite/X4JWnZnxPb)
-- [Chat with our docs](https://chatg.pt/DWjSBZn)
-
-Let's create wonders together with the power and simplicity of crewAI.
+Final output (claim summary, classification, decision, confidence score, and client metadata) is stored in a PostgreSQL database as JSON objects for structured querying 
