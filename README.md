@@ -2,14 +2,13 @@ This project implements an AI-driven claims processing system using the CrewAI m
 
 The pipeline processes PDFs, images, and scanned receipts to extract structured data, classify the claim type, and make rule-based decisions—enhancing automation, accuracy, and scalability in real-world document workflows reducing the manual time and effort by 85%.
 
-
-📄 Document Ingestion & OCR
+Document Ingestion & OCR
 - Supports uploads from local paths or S3.
 - OCR is performed using:
     * LangChain-integrated AWS Textract – for robust key-value, table, and form extraction.
     * Vision LLMs (e.g., Together.ai/OpenAI) – for reading receipts, images, and unstructured or handwritten text.
 
-🧠 CrewAI Agent Workflow
+CrewAI Agent Workflow
 - Defined via agents.yaml and tasks.yaml.
 
 Workflow:
@@ -22,4 +21,4 @@ Final Decision Validator: Verifies the decision. If confidence < 90, overrides t
 
 🗃️ Data Persistence
 
-Final output (claim summary, classification, decision, confidence score, and client metadata) is stored in a PostgreSQL database as JSON objects for structured querying 
+Final output (claim summary, classification, decision, confidence score, and client metadata) is stored in a PostgreSQL database as JSON objects for  querying 
