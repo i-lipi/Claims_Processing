@@ -19,6 +19,6 @@ Claim Decision Agent: Applies deterministic business rules from a configured kno
 
 Final Decision Validator: Verifies the decision. If confidence < 90, overrides to Queued for manual review.
 
-🗃️ Data Persistence
+Data Persistence
 
 Final output (claim summary, classification, decision, confidence score, and client metadata) is stored in a PostgreSQL database as JSON objects for  querying 
