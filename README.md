@@ -2,6 +2,9 @@ This project implements an AI-driven claims processing system using the CrewAI m
 
 The pipeline processes PDFs, images, and scanned receipts to extract structured data, classify the claim type, and make rule-based decisions—enhancing automation, accuracy, and scalability in real-world document workflows reducing the manual time and effort by 85%.
 
+This is a demo version of the project we created for a company. 
+https://www.loom.com/share/11ae9cbfd6554eda98f2189878492b4a
+
 Document Ingestion & OCR
 - Supports uploads from local paths or S3.
 - OCR is performed using:
